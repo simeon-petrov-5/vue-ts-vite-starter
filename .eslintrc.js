@@ -5,12 +5,8 @@ module.exports = {
   },
   extends: [
     "plugin:vue/vue3-essential",
-    // 'plugin:prettier-vue/recommended',
-    // "@vue/typescript/recommended",
     "prettier",
-    // 'prettier/vue',
-    // "prettier/@typescript-eslint",
-    // "./.eslintrc-auto-import.json",
+    "./.eslintrc-auto-import.json",
   ],
   parserOptions: {
     ecmaVersion: 2020,
@@ -20,12 +16,12 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    'prettier-vue/prettier': [
-      'error',
+    "prettier-vue/prettier": [
+      "error",
       {
         singleQuote: true,
         semi: true,
-        trailingComma: 'es5',
+        trailingComma: "es5",
       },
     ],
   },
