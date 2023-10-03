@@ -5,7 +5,13 @@ const { toggle } = useModalStore();
 
 <template>
   <footer>
-    <button type="button" @click="toggle('add')">
+    <button class="secondary" @click="">
+      <font-awesome-icon class="primary" :icon="['fas', 'arrows-rotate']" />
+    </button>
+    <button class="secondary" @click="toggle('dice')">
+      <font-awesome-icon class="primary" :icon="['fas', 'dice-d20']" />
+    </button>
+    <button class="secondary" type="button" @click="toggle('add')">
       <font-awesome-icon class="primary" :icon="['fas', 'circle-plus']" />
     </button>
   </footer>
@@ -13,23 +19,15 @@ const { toggle } = useModalStore();
 
 <style scoped lang="scss">
 footer {
-  position: fixed;
-  bottom: 1.25rem;
-  right: 1.25rem;
-
-  button {
-    background: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    border-radius: 50%;
-    box-shadow: none;
-  }
+  padding: 0.5rem 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.5rem;
 
   svg {
-    height: 4rem;
-    width: 4rem;
-    color: var(--primary);
+    height: 1.75rem;
+    width: 1.75rem;
     vertical-align: unset;
   }
 }
