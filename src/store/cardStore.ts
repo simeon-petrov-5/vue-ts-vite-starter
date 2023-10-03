@@ -30,13 +30,14 @@ export const useCardStore = defineStore("card", () => {
     remove,
     tap,
   }: {
-    cardId: number;
+    cardId: string;
     tapSection: "tapped" | "untapped";
     add: number;
     remove: number;
     tap: number;
   }) => {
     const card = cardFromDeck(cardId);
+    if (!card) return;
     const reverseSection = tapSection === "tapped" ? "untapped" : "tapped";
     card[tapSection] -= tap;
     card[reverseSection] += tap;
