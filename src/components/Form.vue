@@ -3,56 +3,61 @@ import { Card } from "../types/card";
 
 const props = defineProps<{ card: Card }>();
 
-const counter = ref({
-  tapped: props.card.tapped,
-  untapped: props.card.untapped,
+const tapSection = ref<"tapped" | "untapped">("untapped");
+const state = ref<{ add: number; remove: number; tap: number }>({
+  add: 0,
+  remove: 0,
+  tap: 0,
 });
-const tapSection = ref<boolean>(true);
 
-const sectionToggle = (e: any) => {
-  e.preventDefault();
-  tapSection.value = !tapSection.value;
+const sectionToggle = () => {
+  tapSection.value = tapSection.value === "tapped" ? "untapped" : "tapped";
 };
 
-const add = (e: any) => {
-  console.log("add", e);
-};
-const remove = (e: any) => {
-  console.log("remove", e);
-};
-const tap = (e: any) => {
-  console.log("tap", e);
+const onInputChange = (e: any) => {
+  const mode: "add" | "remove" | "tap" = e.target.id;
+  state.value[mode] = Number(e.target.value);
 };
 
-const onKeyDown = (e: any, mode: "add" | "remove" | "tap") => {
-  const value = Number(e.target.value);
-  let section: "tapped" | "untapped" = "tapped";
-  if (tapSection) section = "untapped";
-  switch (mode) {
-    case "tap":
-      let reverseSection: "tapped" | "untapped" = "untapped";
-      if (tapSection) reverseSection = "tapped";
-      counter.value[section] -= value;
-      counter.value[reverseSection] += value;
-      break;
-    case "add":
-      counter.value[section] += value;
-      break;
-    case "remove":
-      counter.value[section] -= value;
-      break;
-  }
-  console.log(counter.value);
+const onSave = () => {
+  return {
+    cardId: props.card.id,
+    tapSection: tapSection.value,
+    ...state.value,
+  };
 };
+
+defineExpose({ onSave });
+
+// const onKeyDown = (e: any, mode: "add" | "remove" | "tap") => {
+//   e.preventDefault();
+//   const value = Number(e.target.value);
+//   switch (mode) {
+//     case "tap":
+//       const reverseSection =
+//         tapSection.value === "tapped" ? "untapped" : "tapped";
+//       counter.value[tapSection.value] -= value;
+//       counter.value[reverseSection] += value;
+//       break;
+//     case "add":
+//       counter.value[tapSection.value] += value;
+//       break;
+//     case "remove":
+//       counter.value[tapSection.value] -= value;
+//       break;
+//   }
+// };
+
+//   @keydown.enter="onKeyDown($event, 'add')"
 </script>
 
 <template>
   <div role="group">
-    <button class="btnsec" @click="sectionToggle($event)">
-      Untapped [ {{ counter.untapped }} ]
+    <button type="button" class="btnsec" @click.prevent="sectionToggle">
+      Untapped [ {{ card.untapped }} ]
     </button>
-    <button class="btnsec" @click="sectionToggle($event)">
-      Tapped [ {{ counter.tapped }} ]
+    <button type="button" class="btnsec" @click.prevent="sectionToggle">
+      Tapped [ {{ card.tapped }} ]
     </button>
   </div>
   <div class="edit">
@@ -62,14 +67,9 @@ const onKeyDown = (e: any, mode: "add" | "remove" | "tap") => {
       id="add"
       name="add"
       placeholder="Add"
-      @keydown.enter="onKeyDown($event, 'add')"
+      aria-invalid="true"
+      @change="onInputChange"
     />
-    <a
-      href="#"
-      role="button"
-      class="outline confirmbtn"
-      @click="add($event)"
-    ></a>
   </div>
   <div class="edit">
     Remove:
@@ -78,14 +78,9 @@ const onKeyDown = (e: any, mode: "add" | "remove" | "tap") => {
       id="remove"
       name="remove"
       placeholder="Remove"
-      @keydown.enter="onKeyDown($event, 'remove')"
+      aria-invalid="true"
+      @change="onInputChange"
     />
-    <a
-      href="#"
-      role="button"
-      class="outline confirmbtn"
-      @click="remove($event)"
-    ></a>
   </div>
 
   <div class="edit">
@@ -95,14 +90,9 @@ const onKeyDown = (e: any, mode: "add" | "remove" | "tap") => {
       id="tap"
       name="tap"
       placeholder="Tap"
-      @keydown.enter="onKeyDown($event, 'tap')"
+      aria-invalid="true"
+      @change="onInputChange"
     />
-    <a
-      href="#"
-      role="button"
-      class="outline confirmbtn"
-      @click="tap($event)"
-    ></a>
   </div>
 </template>
 

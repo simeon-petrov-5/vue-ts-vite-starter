@@ -20,7 +20,7 @@ const inputText = ref("");
 const cardStore = useCardStore();
 
 const toggleSearch = () => {
-  searchResult.data = initResult.data;
+  searchResult.data = { ...initResult.data };
   searchResult.isLoading = initResult.isLoading;
   searchResult.hasError = initResult.hasError;
   inputText.value = "";
