@@ -23,9 +23,37 @@ export const useCardStore = defineStore("card", () => {
     console.log(cards);
   };
 
+  const updateCard = ({
+    cardId,
+    tapSection,
+    add,
+    remove,
+    tap,
+  }: {
+    cardId: number;
+    tapSection: "tapped" | "untapped";
+    add: number;
+    remove: number;
+    tap: number;
+  }) => {
+    const card = cardFromDeck(cardId);
+    const reverseSection = tapSection === "tapped" ? "untapped" : "tapped";
+    card[tapSection] -= tap;
+    card[reverseSection] += tap;
+    card[tapSection] += add;
+    card[tapSection] -= remove;
+    if (card[tapSection] < 0) card[tapSection] = 0;
+
+    cards.value.find((token: Card, idx: number) => {
+      if (token.id === card.id) {
+        cards.value[idx] = card;
+      }
+    });
+  };
+
   const cardFromDeck = (cardId: string): Card | undefined => {
     return cards.value.find((token: Card) => token.id === cardId);
   };
 
-  return { cards, addCard, cardFromDeck };
+  return { cards, addCard, cardFromDeck, updateCard };
 });
