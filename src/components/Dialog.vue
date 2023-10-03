@@ -6,7 +6,7 @@ const props = defineProps<{
   hideSave?: boolean;
   hideCancel?: boolean;
 }>();
-const emit = defineEmits<{ (e: "close"): void }>();
+const emit = defineEmits<{ (e: "close"): void; (e: "save"): void }>();
 
 const bodyEl = ref(null);
 onClickOutside(bodyEl, () => {
@@ -26,7 +26,12 @@ onClickOutside(bodyEl, () => {
       <form method="dialog">
         <slot />
         <div class="btnGrid">
-          <button v-if="!props.hideSave" type="submit" class="small mx-auto">
+          <button
+            v-if="!props.hideSave"
+            type="submit"
+            class="small mx-auto"
+            @click="emit('save')"
+          >
             Save
           </button>
           <button

@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import CardStack from "./CardStack.vue";
 import { useCardStore } from "../../store/cardStore";
+import { Card } from "../../types/card";
+import CardStack from "./CardStack.vue";
+import Dialog from "../Dialog.vue";
+import Form from "../Form.vue";
 
 const cardStore = useCardStore();
 
@@ -23,14 +26,41 @@ const demoCard2 = {
   tapped: 2,
   untapped: 1,
 };
+
+const selected = ref<Card | undefined>();
+
+const onClick = (id: string) => {
+  selected.value = cardStore.cardFromDeck(id);
+  dialogOpen.value = true;
+};
+
+const dialogOpen = ref(false);
+const toggle = () => {
+  dialogOpen.value = !dialogOpen.value;
+  if (!dialogOpen.value) selected.value = undefined;
+};
+
+const formEntry = ref();
+
+const onCardUpdate = () => {
+  const updateInfo = formEntry.value.onSave();
+  cardStore.updateCard(updateInfo);
+  selected.value = undefined;
+};
 </script>
 
 <template>
   <section class="cardsGrid">
-    <CardStack :item="demoCard" />
-    <CardStack :item="demoCard2" />
-    <CardStack v-for="card in cardStore.cards" :item="card" />
+    <CardStack :item="demoCard" @click="onClick" />
+    <CardStack :item="demoCard2" @click="onClick" />
+    <CardStack v-for="card in cardStore.cards" :item="card" @click="onClick" />
   </section>
+
+  <Dialog :open="dialogOpen" @close="toggle" @save="onCardUpdate">
+    <template #title> {{ selected?.name }} </template>
+
+    <Form v-if="selected" ref="formEntry" :card="selected" />
+  </Dialog>
 </template>
 
 <style lang="scss" scoped>
