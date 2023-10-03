@@ -32,7 +32,7 @@ const { visibility, close, toggle } = useModalStore();
 
 <style scoped>
 .container {
-  height: calc(100vh - 50px - 88px);
+  height: calc(100vh - 50px - 72px);
   overflow: auto;
   padding-top: var(--form-element-spacing-horizontal);
   padding-bottom: var(--form-element-spacing-horizontal);
