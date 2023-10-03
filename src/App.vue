@@ -24,18 +24,15 @@ const { visibility, close, toggle } = useModalStore();
       >
         <Dice />
       </Dialog>
-
-      <button @click="toggle('dice')">d20</button>
       <TokenSearch />
-
-      <FloatingFooter />
     </div>
+    <FloatingFooter />
   </div>
 </template>
 
 <style scoped>
 .container {
-  height: calc(100vh - 100px - 0.5rem);
+  height: calc(100vh - 50px - 88px);
   overflow: auto;
   padding-top: var(--form-element-spacing-horizontal);
   padding-bottom: var(--form-element-spacing-horizontal);
