@@ -67,7 +67,6 @@ defineExpose({ onSave });
       id="add"
       name="add"
       placeholder="Add"
-      aria-invalid="true"
       @change="onInputChange"
     />
   </div>
@@ -78,7 +77,6 @@ defineExpose({ onSave });
       id="remove"
       name="remove"
       placeholder="Remove"
-      aria-invalid="true"
       @change="onInputChange"
     />
   </div>
@@ -90,7 +88,6 @@ defineExpose({ onSave });
       id="tap"
       name="tap"
       placeholder="Tap"
-      aria-invalid="true"
       @change="onInputChange"
     />
   </div>

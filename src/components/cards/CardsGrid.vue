@@ -7,40 +7,19 @@ import Form from "../Form.vue";
 
 const cardStore = useCardStore();
 
-const demoCard = {
-  id: "asd",
-  name: "Wolf",
-  imgUrl:
-    "https://cards.scryfall.io/normal/front/8/1/81605b8d-cf1d-49dc-aebb-a857d6796a77.jpg?1675456083",
-  count: 10,
-  tapped: 3,
-  untapped: 7,
-};
-
-const demoCard2 = {
-  id: "asd",
-  name: "Wolf",
-  imgUrl:
-    "https://cards.scryfall.io/normal/front/8/1/81605b8d-cf1d-49dc-aebb-a857d6796a77.jpg?1675456083",
-  count: 10,
-  tapped: 2,
-  untapped: 1,
-};
-
 const selected = ref<Card | undefined>();
+const formEntry = ref();
+const dialogOpen = ref(false);
 
 const onClick = (id: string) => {
   selected.value = cardStore.cardFromDeck(id);
   dialogOpen.value = true;
 };
 
-const dialogOpen = ref(false);
 const toggle = () => {
   dialogOpen.value = !dialogOpen.value;
   if (!dialogOpen.value) selected.value = undefined;
 };
-
-const formEntry = ref();
 
 const onCardUpdate = () => {
   const updateInfo = formEntry.value.onSave();
@@ -51,8 +30,6 @@ const onCardUpdate = () => {
 
 <template>
   <section class="cardsGrid">
-    <CardStack :item="demoCard" @click="onClick" />
-    <CardStack :item="demoCard2" @click="onClick" />
     <CardStack v-for="card in cardStore.cards" :item="card" @click="onClick" />
   </section>
 
