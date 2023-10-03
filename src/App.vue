@@ -4,6 +4,7 @@ import TokenSearch from "./components/TokenSearch.vue";
 import CardsGrid from "./components/cards/CardsGrid.vue";
 import Form from "./components/Form.vue";
 import { Card } from "./types/card";
+import LifeCounter from "./components/LifeCounter.vue";
 
 const dialogOpen = ref(false);
 const toggle = () => {
@@ -21,18 +22,19 @@ const card: Card = {
 </script>
 
 <template>
-  <div class="container">
-    <h1>Hello hackers</h1>
+  <div>
+    <LifeCounter />
+    <div class="container">
+      <CardsGrid />
 
-    <CardsGrid />
+      <Dialog :open="dialogOpen" @close="toggle">
+        <template #title> {{ card.name }} </template>
 
-    <Dialog :open="dialogOpen" @close="toggle">
-      <template #title> {{ card.name }} </template>
+        <Form :card="card" />
+      </Dialog>
 
-      <Form :card="card" />
-    </Dialog>
-
-    <button @click="toggle">toggle dialog</button>
-    <TokenSearch />
+      <button @click="toggle">toggle dialog</button>
+      <TokenSearch />
+    </div>
   </div>
 </template>
