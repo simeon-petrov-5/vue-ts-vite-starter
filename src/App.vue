@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Dialog from "./components/Dialog.vue";
+import TokenSearch from "./components/TokenSearch.vue";
 
 const dialogOpen = ref(false);
 const toggle = () => {
@@ -22,5 +23,6 @@ const toggle = () => {
     </Dialog>
 
     <button @click="toggle">toggle dialog</button>
+    <TokenSearch />
   </div>
 </template>
