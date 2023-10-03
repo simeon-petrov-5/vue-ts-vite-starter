@@ -3,6 +3,9 @@ import axios from "axios";
 import { useAsyncState } from "../composables/useAsyncState";
 import { useCardStore } from "../store/cardStore";
 import Dialog from "./Dialog.vue";
+import { useModalStore } from "../store/modalsStore";
+
+const { visibility, close, toggle } = useModalStore();
 
 const initResult = { data: [], isLoading: true, hasError: false };
 const isSearchOpen = ref(false);
@@ -11,7 +14,7 @@ const inputText = ref("");
 const cardStore = useCardStore();
 
 const toggleSearch = () => {
-  isSearchOpen.value = !isSearchOpen.value;
+  close("add");
   searchResult.value = initResult;
   inputText.value = "";
 };
@@ -51,44 +54,40 @@ const addCard = (card) => {
 </script>
 
 <template>
-  <div>
-    <Dialog :open="isSearchOpen" @close="toggleSearch">
+  <Dialog :open="visibility.add" @close="close('add')">
+    <div>
+      <input type="text" @input="searchToken" v-model="inputText" />
+
       <div>
-        <input type="text" @input="searchToken" v-model="inputText" />
-
-        <div>
-          <div
-            class="searchResult"
-            v-if="
-              !searchResult.isLoading &&
-              !searchResult.hasError &&
-              searchResult.data.length
-            "
+        <div
+          class="searchResult"
+          v-if="
+            !searchResult.isLoading &&
+            !searchResult.hasError &&
+            searchResult.data.length
+          "
+        >
+          <button
+            v-for="card in searchResult.data"
+            type="button"
+            :key="card.id"
+            @click="addCard(card)"
           >
-            <button
-              v-for="card in searchResult.data"
-              type="button"
-              :key="card.id"
-              @click="addCard(card)"
-            >
-              <img
-                :src="
-                  card?.card_faces
-                    ? card.card_faces[0].image_uris.normal
-                    : card.image_uris.normal
-                "
-                :alt="card.name"
-              />
-            </button>
-          </div>
-          <span v-else-if="searchResult.isLoading"> Search for tokens... </span>
-          <span v-else> No matching results found! </span>
+            <img
+              :src="
+                card?.card_faces
+                  ? card.card_faces[0].image_uris.normal
+                  : card.image_uris.normal
+              "
+              :alt="card.name"
+            />
+          </button>
         </div>
+        <span v-else-if="searchResult.isLoading"> Search for tokens... </span>
+        <span v-else> No matching results found! </span>
       </div>
-    </Dialog>
-
-    <button @click="toggleSearch">Add tokens</button>
-  </div>
+    </div>
+  </Dialog>
 </template>
 
 <style scoped lang="scss">

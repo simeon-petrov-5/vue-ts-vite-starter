@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import CardStack from "./CardStack.vue";
+import { useCardStore } from "../../store/cardStore";
+
+const cardStore = useCardStore();
 
 const demoCard = {
   id: "asd",
@@ -26,6 +29,7 @@ const demoCard2 = {
   <section class="cardsGrid">
     <CardStack :item="demoCard" />
     <CardStack :item="demoCard2" />
+    <CardStack v-for="card in cardStore.cards" :item="card" />
   </section>
 </template>
 

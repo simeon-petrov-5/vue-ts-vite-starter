@@ -5,17 +5,15 @@ import CardsGrid from "./components/cards/CardsGrid.vue";
 import Form from "./components/Form.vue";
 import { Card } from "./types/card";
 import LifeCounter from "./components/LifeCounter.vue";
+import FloatingFooter from "./components/FloatingFooter.vue";
+import { useModalStore } from "./store/modalsStore";
 
-const dialogOpen = ref(false);
-const toggle = () => {
-  dialogOpen.value = !dialogOpen.value;
-};
+const { visibility, close, toggle } = useModalStore();
 
 const card: Card = {
   id: "idgwolf",
   name: "Wolf",
   imgUrl: "",
-  count: 12,
   tapped: 8,
   untapped: 4,
 };
@@ -27,14 +25,16 @@ const card: Card = {
     <div class="container">
       <CardsGrid />
 
-      <Dialog :open="dialogOpen" @close="toggle">
+      <Dialog :open="visibility.modify" @close="close('modify')">
         <template #title> {{ card.name }} </template>
 
         <Form :card="card" />
       </Dialog>
 
-      <button @click="toggle">toggle dialog</button>
+      <button @click="toggle('modify')">toggle dialog</button>
       <TokenSearch />
+
+      <FloatingFooter />
     </div>
   </div>
 </template>
