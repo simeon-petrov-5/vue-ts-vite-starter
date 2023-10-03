@@ -7,7 +7,7 @@ import FloatingFooter from "./components/FloatingFooter.vue";
 import { useModalStore } from "./store/modalsStore";
 import Dialog from "./components/Dialog.vue";
 
-const { visibility, close, toggle } = useModalStore();
+const { visibility, close } = useModalStore();
 </script>
 
 <template>
@@ -32,9 +32,11 @@ const { visibility, close, toggle } = useModalStore();
 
 <style scoped>
 .container {
-  height: calc(100vh - 50px - 72px);
+  height: calc(100vh - 50px - 105px);
   overflow: auto;
-  padding-top: var(--form-element-spacing-horizontal);
-  padding-bottom: var(--form-element-spacing-horizontal);
+  margin-top: var(--form-element-spacing-horizontal);
+  margin-bottom: var(--form-element-spacing-horizontal);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 </style>
