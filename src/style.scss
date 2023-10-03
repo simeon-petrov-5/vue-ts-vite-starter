@@ -1,0 +1,10 @@
+button {
+  &.small {
+    width: auto;
+    padding: var(--form-element-spacing-vertical)
+      calc(2 * var(--form-element-spacing-horizontal));
+  }
+  &.mx-auto {
+    margin: 0 auto;
+  }
+}

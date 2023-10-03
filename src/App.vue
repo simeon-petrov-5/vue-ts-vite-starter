@@ -5,10 +5,16 @@ import CardsGrid from "./components/cards/CardsGrid.vue";
 import Form from "./components/Form.vue";
 import { Card } from "./types/card";
 import LifeCounter from "./components/LifeCounter.vue";
+import Dice from "./components/Dice.vue";
 
 const dialogOpen = ref(false);
 const toggle = () => {
   dialogOpen.value = !dialogOpen.value;
+};
+
+const diceDialog = ref(false);
+const toggleDiceDialog = () => {
+  diceDialog.value = !diceDialog.value;
 };
 
 const card: Card = {
@@ -33,7 +39,17 @@ const card: Card = {
         <Form :card="card" />
       </Dialog>
 
+      <Dialog
+        hide-save
+        hide-cancel
+        :open="diceDialog"
+        @close="toggleDiceDialog"
+      >
+        <Dice />
+      </Dialog>
+
       <button @click="toggle">toggle dialog</button>
+      <button @click="toggleDiceDialog">d20</button>
       <TokenSearch />
     </div>
   </div>
