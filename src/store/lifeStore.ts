@@ -1,9 +1,12 @@
 import { defineStore } from "pinia";
+import { useRefHistory } from "@vueuse/core";
 
 export const useLifeStore = defineStore("life", () => {
   const defLife = ref(20);
   const life = ref(defLife.value);
-  const subtract = () => {
+  const { undo } = useRefHistory(life);
+
+  const decrease = () => {
     life.value -= 1;
   };
 
@@ -11,5 +14,5 @@ export const useLifeStore = defineStore("life", () => {
     life.value = defLife.value;
   };
 
-  return { life, subtract, reset };
+  return { life, decrease, reset, undo };
 });
