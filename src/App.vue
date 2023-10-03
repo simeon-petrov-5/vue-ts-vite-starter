@@ -5,6 +5,7 @@ import LifeCounter from "./components/LifeCounter.vue";
 import Dice from "./components/Dice.vue";
 import FloatingFooter from "./components/FloatingFooter.vue";
 import { useModalStore } from "./store/modalsStore";
+import Dialog from "./components/Dialog.vue";
 
 const { visibility, close, toggle } = useModalStore();
 </script>
