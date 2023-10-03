@@ -23,6 +23,9 @@ footer {
   width: 100%;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 0.5rem;
+  button {
+    margin: 0;
+  }
 
   svg {
     height: 1.75rem;
