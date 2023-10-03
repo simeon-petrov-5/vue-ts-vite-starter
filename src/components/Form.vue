@@ -9,9 +9,13 @@ const state = ref<{ add: number; remove: number; tap: number }>({
   tap: 0,
 });
 
-const sectionToggle = () => {
-  tapSection.value = tapSection.value === "tapped" ? "untapped" : "tapped";
+const onSwitch = (e: any) => {
+  tapSection.value = e.target.checked ? "tapped" : "untapped";
 };
+
+const tapText = computed(() =>
+  tapSection.value === "tapped" ? "Untap" : "Tap"
+);
 
 const onInputChange = (e: any) => {
   const mode: "add" | "remove" | "tap" = e.target.id;
@@ -29,69 +33,50 @@ defineExpose({ onSave });
 </script>
 
 <template>
-  <div role="group">
-    <button type="button" class="btnsec" @click.prevent="sectionToggle">
-      Untapped [ {{ card.untapped }} ]
-    </button>
-    <button type="button" class="btnsec" @click.prevent="sectionToggle">
-      Tapped [ {{ card.tapped }} ]
-    </button>
-  </div>
-  <div class="edit">
-    Add:
+  <label for="switch">
+    Untapped [ {{ card.untapped }} ]
+    <input
+      type="checkbox"
+      id="switch"
+      name="switch"
+      role="switch"
+      @change="onSwitch"
+    />
+    Tapped [ {{ card.tapped }} ]
+  </label>
+
+  <label for="add">
+    Add
     <input
       type="number"
       id="add"
       name="add"
-      placeholder="Add"
+      placeholder="Count of tokens to be added"
       @change="onInputChange"
     />
-  </div>
-  <div class="edit">
-    Remove:
+  </label>
+
+  <label for="remove">
+    Remove
     <input
       type="number"
       id="remove"
       name="remove"
-      placeholder="Remove"
+      placeholder="Count of tokens to be removed"
       @change="onInputChange"
     />
-  </div>
+  </label>
 
-  <div class="edit">
-    Un/Tap:
+  <label for="tap">
+    {{ tapText }}
     <input
       type="number"
       id="tap"
       name="tap"
-      placeholder="Tap"
+      :placeholder="`Count of tokens to be ${tapText.toLowerCase()}ped`"
       @change="onInputChange"
     />
-  </div>
+  </label>
 </template>
 
-<style lang="scss" scoped>
-div[role="group"] {
-  display: inline-flex;
-  position: relative;
-  margin-bottom: 1rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 0 0 transparent;
-  vertical-align: middle;
-  transition: box-shadow 0.2s ease-in-out;
-  .btnsec {
-    width: 180px;
-  }
-}
-
-.edit {
-  display: flex;
-  justify-content: center;
-  .confirmbtn {
-    display: flex;
-    width: 30px;
-    height: 30px;
-    border-radius: 90px;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

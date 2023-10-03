@@ -1,28 +1,8 @@
 import { defineStore } from "pinia";
 import { Card } from "../types/card";
 
-const demoCard = {
-  id: "asd",
-  name: "Wolf",
-  imgUrl:
-    "https://cards.scryfall.io/normal/front/8/1/81605b8d-cf1d-49dc-aebb-a857d6796a77.jpg?1675456083",
-  count: 10,
-  tapped: 3,
-  untapped: 7,
-};
-
-const demoCard2 = {
-  id: "asd2",
-  name: "Wolf",
-  imgUrl:
-    "https://cards.scryfall.io/normal/front/8/1/81605b8d-cf1d-49dc-aebb-a857d6796a77.jpg?1675456083",
-  count: 10,
-  tapped: 2,
-  untapped: 1,
-};
-
 export const useCardStore = defineStore("card", () => {
-  const cards = ref<Card[]>([demoCard, demoCard2]);
+  const cards = ref<Card[]>([]);
 
   const addCard = (newCard: any) => {
     let card: Card | undefined = cardFromDeck(newCard.id);
