@@ -2,7 +2,6 @@
 import { Card } from "../types/card";
 
 const props = defineProps<{ card: Card }>();
-
 const tapSection = ref<"tapped" | "untapped">("untapped");
 const state = ref<{ add: number; remove: number; tap: number }>({
   add: 0,
@@ -26,29 +25,7 @@ const onSave = () => {
     ...state.value,
   };
 };
-
 defineExpose({ onSave });
-
-// const onKeyDown = (e: any, mode: "add" | "remove" | "tap") => {
-//   e.preventDefault();
-//   const value = Number(e.target.value);
-//   switch (mode) {
-//     case "tap":
-//       const reverseSection =
-//         tapSection.value === "tapped" ? "untapped" : "tapped";
-//       counter.value[tapSection.value] -= value;
-//       counter.value[reverseSection] += value;
-//       break;
-//     case "add":
-//       counter.value[tapSection.value] += value;
-//       break;
-//     case "remove":
-//       counter.value[tapSection.value] -= value;
-//       break;
-//   }
-// };
-
-//   @keydown.enter="onKeyDown($event, 'add')"
 </script>
 
 <template>
