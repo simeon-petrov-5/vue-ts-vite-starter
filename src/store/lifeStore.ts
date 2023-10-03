@@ -14,5 +14,5 @@ export const useLifeStore = defineStore("life", () => {
     life.value = defLife.value;
   };
 
-  return { life, decrease, reset, undo };
+  return { life, defLife, decrease, reset, undo };
 });

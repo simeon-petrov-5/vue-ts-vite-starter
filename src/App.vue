@@ -49,3 +49,12 @@ const card: Card = {
     </div>
   </div>
 </template>
+
+<style scoped>
+.container {
+  height: calc(100vh - 100px - 0.5rem);
+  overflow: auto;
+  padding-top: var(--form-element-spacing-horizontal);
+  padding-bottom: var(--form-element-spacing-horizontal);
+}
+</style>

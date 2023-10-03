@@ -25,9 +25,23 @@ const onClick = () => {
 </script>
 
 <template>
-  <button ref="htmlRefHook" @click="onClick">
+  <button ref="htmlRefHook" @click="onClick" class="lifeBtn">
     {{ lifeStore.life }}
   </button>
+  <progress
+    class="lifeProgress"
+    :value="lifeStore.life"
+    :max="lifeStore.defLife"
+  ></progress>
 </template>
 
-<style scoped></style>
+<style scoped>
+.lifeBtn {
+  margin-bottom: -12px;
+  border-radius: 0px;
+}
+.lifeProgress {
+  border-radius: 0px;
+  margin: 0;
+}
+</style>
