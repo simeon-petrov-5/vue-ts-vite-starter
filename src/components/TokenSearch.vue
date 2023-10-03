@@ -6,10 +6,12 @@ import Dialog from "./Dialog.vue";
 const initResult = { data: [], isLoading: true, hasError: false };
 const isSearchOpen = ref(false);
 const searchResult = ref(initResult);
+const inputText = ref("");
 
 const toggleSearch = () => {
   isSearchOpen.value = !isSearchOpen.value;
   searchResult.value = initResult;
+  inputText.value = "";
 };
 
 const debounce = <T extends (...args: any[]) => void>(
@@ -49,7 +51,7 @@ const addCard = (event: PointerEvent) => {
   <div>
     <Dialog :open="isSearchOpen" @close="toggleSearch">
       <div>
-        <input type="text" v-model="search" @input="searchToken" />
+        <input type="text" @input="searchToken" v-model="inputText" />
 
         <div>
           <div
