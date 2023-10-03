@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import axios from "axios";
-import { useAsyncState } from "../composables/useAsyncState";
 import { useCardStore } from "../store/cardStore";
 import Dialog from "./Dialog.vue";
 import { useModalStore } from "../store/modalsStore";
@@ -12,7 +11,7 @@ const initResult: { data: any[]; isLoading: boolean; hasError: boolean } = {
   isLoading: true,
   hasError: false,
 };
-const searchResult = ref<{
+const searchResult = reactive<{
   data: any[];
   isLoading: boolean;
   hasError: boolean;
@@ -21,9 +20,11 @@ const inputText = ref("");
 const cardStore = useCardStore();
 
 const toggleSearch = () => {
-  close("add");
-  searchResult.value = initResult;
+  searchResult.data = initResult.data;
+  searchResult.isLoading = initResult.isLoading;
+  searchResult.hasError = initResult.hasError;
   inputText.value = "";
+  close("add");
 };
 
 const debounce = <T extends (...args: any[]) => void>(
@@ -40,18 +41,20 @@ const debounce = <T extends (...args: any[]) => void>(
   } as T;
 };
 
-const searchToken = debounce((e: Event) => {
-  const result = useAsyncState(
-    axios
-      .get(
-        `https://api.scryfall.com/cards/search?q=name:${e.target.value}+is:token`
-      )
-      .then((result) => {
-        return result.data.data;
-      }),
-    []
-  );
-  searchResult.value = { ...result };
+const searchToken = debounce(async (e: any) => {
+  searchResult.isLoading = true;
+  searchResult.hasError = false;
+  try {
+    const res = await axios.get(
+      `https://api.scryfall.com/cards/search?q=name:${e.target.value}+is:token`
+    );
+    searchResult.data = res.data.data;
+  } catch (e) {
+    console.error("Ops", e);
+    searchResult.hasError = true;
+  } finally {
+    searchResult.isLoading = false;
+  }
 }, 1000);
 
 const addCard = (card: any) => {
