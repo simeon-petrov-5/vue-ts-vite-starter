@@ -2,12 +2,11 @@
 import TokenSearch from "./components/TokenSearch.vue";
 import CardsGrid from "./components/cards/CardsGrid.vue";
 import LifeCounter from "./components/LifeCounter.vue";
-import Dice from "./components/Dice.vue";
 import FloatingFooter from "./components/FloatingFooter.vue";
 import { useModalStore } from "./store/modalsStore";
 import Dialog from "./components/Dialog.vue";
 
-const { visibility, close, toggle } = useModalStore();
+const { visibility, close } = useModalStore();
 </script>
 
 <template>
