@@ -5,11 +5,18 @@ import { useCardStore } from "../store/cardStore";
 import Dialog from "./Dialog.vue";
 import { useModalStore } from "../store/modalsStore";
 
-const { visibility, close, toggle } = useModalStore();
+const { visibility, close } = useModalStore();
 
-const initResult = { data: [], isLoading: true, hasError: false };
-const isSearchOpen = ref(false);
-const searchResult = ref(initResult);
+const initResult: { data: any[]; isLoading: boolean; hasError: boolean } = {
+  data: [],
+  isLoading: true,
+  hasError: false,
+};
+const searchResult = ref<{
+  data: any[];
+  isLoading: boolean;
+  hasError: boolean;
+}>(initResult);
 const inputText = ref("");
 const cardStore = useCardStore();
 
@@ -23,7 +30,7 @@ const debounce = <T extends (...args: any[]) => void>(
   fn: T,
   delay: number
 ): T => {
-  let timeoutID: number | null = null;
+  let timeoutID: number | undefined = undefined;
 
   return function (this: any, ...args: any[]) {
     clearTimeout(timeoutID);
@@ -33,8 +40,8 @@ const debounce = <T extends (...args: any[]) => void>(
   } as T;
 };
 
-const searchToken = debounce((e: InputEvent) => {
-  const { data, isLoading, hasError } = useAsyncState(
+const searchToken = debounce((e: Event) => {
+  const result = useAsyncState(
     axios
       .get(
         `https://api.scryfall.com/cards/search?q=name:${e.target.value}+is:token`
@@ -44,17 +51,17 @@ const searchToken = debounce((e: InputEvent) => {
       }),
     []
   );
-  searchResult.value = { data, isLoading, hasError };
+  searchResult.value = { ...result };
 }, 1000);
 
-const addCard = (card) => {
+const addCard = (card: any) => {
   cardStore.addCard(card);
   toggleSearch();
 };
 </script>
 
 <template>
-  <Dialog :open="visibility.add" @close="close('add')">
+  <Dialog hide-save hide-cancel :open="visibility.add" @close="close('add')">
     <div>
       <input type="text" @input="searchToken" v-model="inputText" />
 
