@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import axios from "axios";
 import { useAsyncState } from "../composables/useAsyncState";
+import { useCardStore } from "../store/cardStore";
 import Dialog from "./Dialog.vue";
 
 const initResult = { data: [], isLoading: true, hasError: false };
 const isSearchOpen = ref(false);
 const searchResult = ref(initResult);
 const inputText = ref("");
+const cardStore = useCardStore();
 
 const toggleSearch = () => {
   isSearchOpen.value = !isSearchOpen.value;
@@ -42,8 +44,9 @@ const searchToken = debounce((e: InputEvent) => {
   searchResult.value = { data, isLoading, hasError };
 }, 1000);
 
-const addCard = (event: PointerEvent) => {
-  console.log(event);
+const addCard = (card) => {
+  cardStore.addCard(card);
+  toggleSearch();
 };
 </script>
 
@@ -65,7 +68,8 @@ const addCard = (event: PointerEvent) => {
             <button
               v-for="card in searchResult.data"
               type="button"
-              @click="addCard($event)"
+              :key="card.id"
+              @click="addCard(card)"
             >
               <img
                 :src="
