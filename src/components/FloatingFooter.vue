@@ -19,7 +19,6 @@ const { toggle } = useModalStore();
 
 <style scoped lang="scss">
 footer {
-  padding: 0.5rem 0;
   display: grid;
   width: 100%;
   grid-template-columns: 1fr 1fr 1fr;
