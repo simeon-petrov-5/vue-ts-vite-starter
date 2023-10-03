@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Dialog from "./components/Dialog.vue";
+import CardsGrid from "./components/cards/CardsGrid.vue";
 
 const dialogOpen = ref(false);
 const toggle = () => {
@@ -10,6 +11,8 @@ const toggle = () => {
 <template>
   <div class="container">
     <h1>Hello hackers</h1>
+
+    <CardsGrid />
 
     <Dialog :open="dialogOpen" @close="toggle">
       <template #title> Hi I'm the title </template>
