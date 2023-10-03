@@ -8,7 +8,7 @@ const { visibility, close } = useModalStore();
 
 const initResult: { data: any[]; isLoading: boolean; hasError: boolean } = {
   data: [],
-  isLoading: true,
+  isLoading: false,
   hasError: false,
 };
 const searchResult = reactive<{
@@ -55,7 +55,7 @@ const searchToken = debounce(async (e: any) => {
   } finally {
     searchResult.isLoading = false;
   }
-}, 1000);
+}, 500);
 
 const addCard = (card: any) => {
   cardStore.addCard(card);
@@ -93,8 +93,14 @@ const addCard = (card: any) => {
             />
           </button>
         </div>
-        <span v-else-if="searchResult.isLoading"> Search for tokens... </span>
-        <span v-else> No matching results found! </span>
+        <span v-else-if="searchResult.isLoading"
+          ><button aria-busy="true" class="secondary">
+            Currently searching for magic…
+          </button></span
+        >
+        <span v-else-if="searchResult.hasError">
+          No matching results found!
+        </span>
       </div>
     </div>
   </Dialog>
