@@ -12,7 +12,7 @@ const demoCard = {
 };
 
 const demoCard2 = {
-  id: "asd",
+  id: "asd2",
   name: "Wolf",
   imgUrl:
     "https://cards.scryfall.io/normal/front/8/1/81605b8d-cf1d-49dc-aebb-a857d6796a77.jpg?1675456083",
