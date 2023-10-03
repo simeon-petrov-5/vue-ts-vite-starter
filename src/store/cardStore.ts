@@ -39,6 +39,7 @@ export const useCardStore = defineStore("card", () => {
     const card = cardFromDeck(cardId);
     if (!card) return;
     const reverseSection = tapSection === "tapped" ? "untapped" : "tapped";
+    if (card[tapSection] < tap) tap = card[tapSection];
     card[tapSection] -= tap;
     card[reverseSection] += tap;
     card[tapSection] += add;
